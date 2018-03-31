@@ -11,11 +11,13 @@
     "watch": "tsc -w --project ./src/tsconfig.json",
     "run": "nodemon ./_output/test.js --delay .5"
   },
+  "homepage": "https://github.com/jakkaj/kubecfg",
   "author": {
     "name": "Jordan Knight",
     "email": "jakkaj@gmail.com",
-    "url": "https://github.com/jakkaj"
+    "url": "https://github.com/jakkaj/kubecfg"
   },
+  "repository": "https://github.com/jakkaj/kubecfg.git",
   "license": "MIT",
   "keywords": [
     "Kubectl",
