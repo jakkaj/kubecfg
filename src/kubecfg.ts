@@ -46,7 +46,7 @@ export default class kubecfg{
     }
 
     private _processLinux(add:string, remove:string){
-        console.log("********" + process.env.KUBECONFIG);
+        //console.log("********" + process.env.KUBECONFIG);
         //console.log(add);
 
         var f = path.join(path.resolve(process.env.HOME, ".bashrc"));

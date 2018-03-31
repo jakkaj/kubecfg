@@ -33,3 +33,5 @@ You'll need to reload .bashrc after you've run the app (any assistance on how to
 ```
 . ~/.bashrc
 ```
+
+![kubecfg_good](https://user-images.githubusercontent.com/5225782/38168190-c7501062-3588-11e8-8d5f-919ad61b52b6.gif)

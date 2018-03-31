@@ -31,7 +31,7 @@ class kubecfg {
         }
     }
     _processLinux(add, remove) {
-        console.log("********" + process.env.KUBECONFIG);
+        //console.log("********" + process.env.KUBECONFIG);
         //console.log(add);
         var f = path.join(path.resolve(process.env.HOME, ".bashrc"));
         var fcontents = "";
