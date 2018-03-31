@@ -1,0 +1,35 @@
+{
+  "name": "kubecfg",
+  "version": "1.0.0",
+  "description": "Helper tool to configure enivronment variables for Kubectl",
+  "main": "_output/kubecfg.js",
+  "bin": {
+    "kubecfg": "_output/run.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w --project ./src/tsconfig.json",
+    "run": "nodemon ./_output/test.js --delay .5"
+  },
+  "author": {
+    "name": "Jordan Knight",
+    "email": "jakkaj@gmail.com",
+    "url": "https://github.com/jakkaj"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Kubectl",
+    "Kubernetes",
+    "Environment",
+    "Configuration",
+    "Config"
+  ],
+  "devDependencies": {
+    "@types/node": "^9.6.1",
+    "nodemon": "^1.17.3",
+    "typescript": "^2.8.1"
+  },
+  "dependencies": {
+    "commander": "^2.15.1"
+  }
+}
