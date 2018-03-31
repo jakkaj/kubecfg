@@ -1,4 +1,4 @@
-#kubecfg
+# kubecfg
 
 A simple command line tool to add and remove kubectl config files to your environment. 
 
