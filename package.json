@@ -1,6 +1,6 @@
 {
   "name": "kubecfg",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Helper tool to configure enivronment variables for Kubectl",
   "main": "_output/kubecfg.js",
   "bin": {

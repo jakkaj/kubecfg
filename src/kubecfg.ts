@@ -57,6 +57,9 @@ export default class kubecfg{
         }
 
         var current_config = process.env.KUBECONFIG;
+        if(!current_config){
+            current_config = "";
+        }
         if(add != null){
             
             if(current_config.indexOf(add)==-1){
@@ -80,7 +83,7 @@ export default class kubecfg{
         if(fcontents.indexOf("KUBECONFIG")!=-1){
             finalcontents = fcontents.replace(/(\n)((.*?)KUBECONFIG.*?\n)/gi, `\n${current_config}`);
         }else{
-            finalcontents += `#Kubectl configuration\n${current_config}`;
+            finalcontents = fcontents + `\n\n#Kubectl configuration\n${current_config}`;
         }
 
 

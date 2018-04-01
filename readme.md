@@ -2,6 +2,10 @@
 
 A simple command line tool to add and remove kubectl config files to your environment. 
 
+The basic premise is this: You have a number of Kube environments. kubectl supports having those environment configs in different files. This app helps you add and remove files to the saved kubectl environment variable $KUBECONFIG. It saves this in ~/.bashrc. 
+
+Find the file you want to add, run `kubecfg -a <filename>` and boom, added. `-r` to remove it. 
+
 **Note** This is not currently working on Windows in Powershell or CMD, only Bash. It's a work in progress. 
 
 ## Installation
