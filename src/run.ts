@@ -3,12 +3,12 @@
 import kubecfg from './kubecfg';
 
 class test{
-    public run(){
+    public async run(){
 
         var a = process.argv;
         
         var k = new kubecfg(a);
-
+        await k.Process();
     }
 }
 

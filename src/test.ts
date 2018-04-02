@@ -1,17 +1,26 @@
 import kubecfg from './kubecfg';
 
 class test{
-    public run(){
+    public async run(){
 
         var a = process.argv;
         
-        a.push("-r");
+        a.push("-a");
         a.push("testdata/someconfig.json");
         var k = new kubecfg(a);
+        try{
+            await k.Process();
+        }catch(e){
+            throw e;
+        }
+        
 
     }
 }
 
 var t = new test();
-
-t.run();
+try{
+    t.run();
+}catch(e){
+    throw e;
+}
