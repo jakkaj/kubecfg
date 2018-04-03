@@ -29,6 +29,12 @@ export default class kubecfg {
             var addFile: string = null;
             var removeFile: string = null;
 
+            if (program.show) {
+                await this._showVars();
+                good(true);
+                return;
+            }
+
             if (program.add) {
                 addFile = program.add;
                 addFile = this._tryFixFile(addFile);
@@ -51,11 +57,10 @@ export default class kubecfg {
                 this._processLinux(addFile, removeFile);
                 good(true);
             } else {
-                try{
+                try {
                     var result = await this._processWindows(addFile, removeFile);
                     good(result);
-                }catch(e)
-                {
+                } catch (e) {
                     bad(e);
                 }
                 good(result);
@@ -64,23 +69,31 @@ export default class kubecfg {
 
     }
 
-    private _processWindows(add: string, remove: string): Promise<boolean> {        
-         var home = os.homedir();
+    private _showVars():Promise<string> {
+        return new Promise<string>(async (good, bad)=>{
+            var current_config = "";
+            if (this._isWin) {
+                current_config = await this._runPowershell('[System.Environment]::GetEnvironmentVariable("KUBECONFIG","User")');
+    
+            } else {
+                current_config = await this._runBash('. ~/.bashrc | echo $KUBECONFIG');
+            }
+    
+            console.log(`Current saved config: ${current_config}`);
+            good(current_config);
+        });
 
-        if(add!=null){
-            add = add.replace("~", home);
-        }
         
-        if(remove!=null){
-            remove = remove.replace("~", home);
-        }        
-        
+     
+    }
+
+    private _processWindows(add: string, remove: string): Promise<boolean> {
+
+
         return new Promise<boolean>(async (good, bad) => {
-            //$Env:Path to read
-            //[Environment]::SetEnvironmentVariable("TestVariableName", "My Value", "User")
-
+           
             try {
-                var current_config = await this._runPowershell("$Env:KUBECONFIG");
+                var current_config = await this._showVars();
                 current_config = current_config.replace(/^\n+|\n+$/g, '');
                 current_config = current_config.replace(/^\r+|\r+$/g, '');
                 console.log(`Current config: ${current_config}`);
@@ -121,6 +134,20 @@ export default class kubecfg {
 
     }
 
+    private async _runBash(command: string): Promise<string> {
+
+        return new Promise<string>((good, bad) => {
+            var result = execFile("bash", ["-c", command], (error, stdout, stderr) => {
+                if (!error) {
+                    good(stdout);
+                } else {
+                    bad(stderr);
+                }
+            });
+        });
+
+    }
+
     private async _runPowershell(command: string): Promise<string> {
         return new Promise<string>((good, bad) => {
             var result = execFile("powershell", ["-Command", command], (error, stdout, stderr) => {
@@ -133,9 +160,10 @@ export default class kubecfg {
         });
     }
 
-    private _processLinux(add: string, remove: string) {
+    private async _processLinux(add: string, remove: string) {
         //console.log("********" + process.env.KUBECONFIG);
         //console.log(add);
+
 
         var f = path.join(path.resolve(process.env.HOME, ".bashrc"));
         var fcontents = "";
@@ -144,7 +172,8 @@ export default class kubecfg {
             fcontents = fs.readFileSync(f, 'utf8');
         }
 
-        var current_config = process.env.KUBECONFIG;
+        var current_config = await this._showVars();
+
         if (!current_config) {
             current_config = "";
         }
@@ -185,8 +214,17 @@ export default class kubecfg {
 
     private _tryFixFile(file): string {
 
+        if (this._isWin) {
+
+            var home = os.homedir();
+
+            if (file != null) {
+                file = file.replace("~", home);
+            }
+        }
+
         var full = path.resolve(file);
-        console.log(`Full: ${full}`);
+
         if (fs.existsSync(full)) {
             return full;
         }
@@ -199,6 +237,7 @@ export default class kubecfg {
 
             .option('-a, --add [file]', 'Add a file to the Kubectl environment')
             .option('-r, --remove [file]', 'Remove a file from the Kubectl environment')
+            .option('-s, --show', 'Show the current config')
             .parse(argv);
     }
 }
