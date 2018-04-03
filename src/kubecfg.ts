@@ -79,7 +79,7 @@ export default class kubecfg {
                 current_config = await this._runBash('. ~/.bashrc | echo $KUBECONFIG');
             }
     
-            console.log(`Current saved config: ${current_config}`);
+            console.log(`Current config: ${current_config}`);
             good(current_config);
         });
 
@@ -96,7 +96,7 @@ export default class kubecfg {
                 var current_config = await this._showVars();
                 current_config = current_config.replace(/^\n+|\n+$/g, '');
                 current_config = current_config.replace(/^\r+|\r+$/g, '');
-                console.log(`Current config: ${current_config}`);
+               
                 if (!current_config) {
                     current_config = "";
                 }
@@ -173,10 +173,13 @@ export default class kubecfg {
         }
 
         var current_config = await this._showVars();
-
+        
         if (!current_config) {
             current_config = "";
         }
+
+        current_config = current_config.trim();
+
         if (add != null) {
 
             if (current_config.indexOf(add) == -1) {
@@ -185,13 +188,15 @@ export default class kubecfg {
         }
 
         if (remove != null) {
-            current_config = current_config.replace(remove, "");
-            current_config = current_config.replace("::", ":");
+            current_config = current_config.replace(remove, "");            
         }
 
         if (current_config.trim() != "") {
             current_config = `export KUBECONFIG=${current_config}\n`;
         }
+
+        current_config = current_config.replace("::", ":");
+        current_config = current_config.replace(/^:+|:+(\n?)$/g, '');        
 
         //find current in the bashrc, if there, kill that line
         //the current set config is king
