@@ -13,8 +13,13 @@ class test {
     run() {
         return __awaiter(this, void 0, void 0, function* () {
             var a = process.argv;
-            a.push("-a");
-            a.push("testdata/someconfig.json");
+            // a.push("-c");
+            // a.push("/mnt/c/Temp/kube/8/acs_kubeconfig.json");
+            // a.push("-u");
+            // a.push("Ravenswood-Melb-vsthurs-9");
+            //a.push("-r");
+            //a.push("Ravenswood-Melb-vsthurs-9");
+            //a.push("-s");
             var k = new kubecfg_1.default(a);
             try {
                 yield k.Process();

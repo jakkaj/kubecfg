@@ -1,7 +1,7 @@
 {
   "name": "kubecfg",
-  "version": "1.0.7",
-  "description": "Helper tool to configure enivronment variables for Kubectl",
+  "version": "2.0.1",
+  "description": "Helper tool to configure environment variables for Kubectl",
   "main": "_output/kubecfg.js",
   "bin": {
     "kubecfg": "_output/run.js"
@@ -32,6 +32,9 @@
     "typescript": "^2.8.1"
   },
   "dependencies": {
-    "commander": "^2.15.1"
+    "commander": "^2.15.1",
+    "js-yaml": "^3.12.0",
+    "randomstring": "^1.1.5",
+    "walk": "^2.3.13"
   }
 }

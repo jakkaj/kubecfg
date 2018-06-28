@@ -14,6 +14,7 @@ class test {
     run() {
         return __awaiter(this, void 0, void 0, function* () {
             var a = process.argv;
+            console.log(a);
             var k = new kubecfg_1.default(a);
             yield k.Process();
         });
